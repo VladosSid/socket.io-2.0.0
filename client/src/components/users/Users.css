@@ -1,0 +1,26 @@
+.Users {
+    border-right: 3px solid #fff;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.Users-count {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 1px solid #fff;
+}
+
+.Users-list {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    list-style: none;
+}
+
+.User-item {
+    margin-bottom: 10px;
+    font-size: 22px;
+}

@@ -1,0 +1,63 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  width: 350px;
+  
+  padding: 15px;
+
+  border: 3px solid #f5c75a;
+  border-radius: 20px;
+
+  -webkit-box-shadow: 5px 5px 50px -1px rgba(245,199,90,1);
+  -moz-box-shadow: 5px 5px 50px -1px rgba(245,199,90,1);
+  box-shadow: 5px 5px 50px -1px rgba(245,199,90,1);
+}
+
+.Input {
+  width: 100%;
+
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  
+  border: 1px solid green;
+  border-radius: 10px;
+
+  font-size: 24px;
+
+  color: black;
+  background: rgb(124, 47, 248);
+
+  outline: none;
+}
+
+.Button {
+  width: 100%;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  font-size: 24px;
+  
+  color: aliceblue;
+  background: #282c34;
+  
+  border: 3px solid rgb(45, 62, 249);
+  border-radius: 20px;
+
+  cursor: pointer;
+
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.Button:hover,
+.Button:focus {
+  -webkit-box-shadow: 5px 5px 50px -1px #2d3ef9;
+  -moz-box-shadow: 5px 5px 50px -1px #2d3ef9;
+  box-shadow: 5px 5px 50px -1px #2d3ef9;
+}
