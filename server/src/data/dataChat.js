@@ -16,21 +16,8 @@ let ROOMS = [{
     id: '123148shdjasd-asfhas',
     name: 'STEPaN', 
   },
-  member: [
-    {
-      id: '123148shdjasd-asfhas',
-      name: 'STEPaN', 
-    },
-    {
-      id: '42893dh-sjf38112dsa',
-      name: 'АйКю999',
-    },
-  ],
-  messages: [
-    {id: '213jsdafh34-sanfu53', message: "Hi world!", owner: 'STEPaN'},
-    {id: '234ds-asd34f', message: "Hi bro!", owner: 'Гений'},
-    {id: 'asfa3-asd324', message: "Hi.", owner: 'АйКю999'},
-  ]
+  member: [],
+  messages: []
 },
 {
   id: "14783024-sdn341d", 

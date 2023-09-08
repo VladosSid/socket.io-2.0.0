@@ -1,44 +1,38 @@
 import React from 'react'
 
-import './Chat.css'
-
 import authSelectors from '../../reduxToolkit/selectors/selectorsUser'
 
 import ChatMessage from './ChatMessage'
 import MessageInput from './ChatInput'
 
+import './Chat.css'
+
 interface IProps {
   isConnected: Boolean,
-  // messageList: ISocketMessage[],
+  sendMessage: (msg:string) => void
 }
 
-const Chat: React.FC<IProps> = ({ isConnected }) => {  
+const Chat: React.FC<IProps> = ({ isConnected, sendMessage}) => {  
   const currentUsername = authSelectors.useGetCurrentUserName()
 
-  const sendMessageUser = (msg: string) => {
-    // if (socket) {
-    //   socket.emit("message", msg);
-    // }
-  }
-  
   return (
-      <div className='Chat'>
-          {
-          !isConnected ? 
-            <span>Loading...</span> : 
-            <>
-              <span className='Chat-title'>
-                  Wecom in chat, <span>{currentUsername}</span>
-              </span>
-              <div>
-                <ul className='Chat-messages'>
-                    <ChatMessage />
-                </ul>
-                <MessageInput sendMessageUser={sendMessageUser}/>
-              </div>
-            </>  
-          }
-      </div>
+    <div className='Chat'>
+      {
+      !isConnected ? 
+        <span>Loading...</span> : 
+        <>
+          <span className='Chat-title'>
+            Wecom in chat, <span>{currentUsername}</span>
+          </span>
+
+          <div className='Chat__mess-continer'>
+              <ChatMessage />
+
+            <MessageInput sendMessageUser={sendMessage}/>
+          </div>
+        </>  
+      }
+    </div>
   )
 }
 

@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const {USERS, ROOMS} = require('../data/dataChat')
 
 const validateUserConnectionsRoom = (data) => {
@@ -27,11 +29,11 @@ const validateUserConnectionsRoom = (data) => {
 
   const room = ROOMS[indexRoom]
 
-  return dataRes = {
+  dataRes = {
     room,
     name: user.name,
   }
-  // return dataRes
+  return dataRes
 }
 
 // disconnected User
@@ -56,15 +58,42 @@ const disconnectedUser = (data) => {
   // console.log('ROOMS[indexRoom].member', ROOMS[indexRoom].member.filter(memb => memb.id !== user.id));
   const room = ROOMS[indexRoom]
 
-  return dataRes = {
+  dataRes = {
     message: `${user.name} disconnected Chat.`,
     room,
   }
-  // return dataRes
+  return dataRes
+}
+
+const sendMessageRoom = data => {
+  const { userId, roomId, message } = data
+  
+  if (!userId || !roomId || !message) throw new Error('Bad request')
+
+  // check user auth 
+  const userIndex = USERS.findIndex(usr => usr.id === userId)
+  if (userIndex === -1 || !USERS[userIndex].online) throw new Error('Not autorized!!!')
+  const userName = USERS[userIndex].name
+
+  //find room
+  const indexRoom = ROOMS.findIndex(room => room.id === roomId) 
+  if (indexRoom === -1) throw new Error('Room not found! Choose another room or create new room.')
+  
+  const messsageData = {
+    id: uuidv4(),
+    ownerId: userId,
+    owner: userName,
+    message,
+  }
+
+  ROOMS[indexRoom].messages.push(messsageData)
+
+  return messsageData
 }
 
 const socketOperations = {
   validateUserConnectionsRoom,
   disconnectedUser,
+  sendMessageRoom,
 }
 module.exports = socketOperations

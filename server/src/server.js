@@ -43,11 +43,33 @@ io.on('connection', (socket) => {
       
       // console.log('dataDisconected', dataDisconected);
 
-      socket.leave(socket.handshake.auth.roomId)
       socket.to(data.roomId).emit('leaveRoom', dataDisconected)
+      socket.leave(socket.handshake.auth.roomId)
       console.log(`${socket.client.id} disconnect!!!`);
     } catch (err) {
-      console.log("disconnect ERR", err.message);
+      // console.log("disconnect ERR", err.message);
+      socket.emit('error', err.message)
+    }
+    // count -= 1
+  })
+
+  // leaveRoom
+  socket.on('leaveRoom', async data => {
+    try {
+      data = {
+        socketId: socket.client.id,
+        userId: data.userId,
+        roomId: data.roomId,
+      }
+      const dataDisconected = await socketOperations.disconnectedUser(data)
+      
+      // console.log('dataDisconected', dataDisconected);
+
+      socket.to(data.roomId).emit('leaveRoom', dataDisconected)
+      socket.leave(socket.handshake.auth.roomId)
+      console.log(`${socket.client.id} leaveRoom!!!`);
+    } catch (err) {
+      // console.log("disconnect ERR", err.message);
       socket.emit('error', err.message)
     }
     count -= 1
@@ -76,51 +98,24 @@ io.on('connection', (socket) => {
       socket.to(data.roomId).emit('joinRoom', allUsersData)
       socket.emit('welcomMessage', welcomMessage)
       } catch (err) {
-      console.log("connect ERR", err.message);
+      // console.log("connect ERR", err.message);
       socket.emit('error', err.message)
     }
   })
 
-  // socket.on('message', (message) => {
-  //   console.log('message', message);
-  //   io.emit('message', 'Hi-----')
-  // })
-//   // disconnected user to socket
-//   socket.on('disconnectUser', async (data) => {
-    // try {
-    //   data.socketId = socket.client.id 
-    //   const dataDisconected = await socketOperations.disconnectedUser(data)
-      
-    //   console.log(`${socket.client.id} disconnect!!!`);
-    //   io.emit('disconnectRoom', dataDisconected.message)
-    // } catch (err) {
-    //   console.log(err.message);
-    //   socket.emit('error', err.message)
-    // }
-    // count -= 1
-//   })
+  socket.on('messageRoom', async data => {
+    try {
+      const messageData = socketOperations.sendMessageRoom(data)
+      // console.log('newMessage', messageData);
 
-//   // connected user to socket
-//   socket.emit('connected', 'User conected!!!')
-
-//   socket.on('connectedRoom', async (data) => {
-  //   try {
-  //     data.socketId = socket.client.id
-  //     const userCurrentRoom = await socketOperations.validateUserConnectionsRoom(data)
-
-  //     io.emit('connectedRoom', userCurrentRoom)
-  //     console.log('User connected ROOM.');
-  //   } catch (err) {
-  //     socket.emit('error', err.message)
-  //   }
-  // })
-
-  // socket.on('message', (message) => {
-  //   console.log('message', message);
-  //   io.emit('message', 'Hi-----')
-  // })
-});
-
+      socket.to(data.roomId).emit('newMessage', messageData)
+      socket.emit('newMessage', messageData)
+    } catch (err) {
+      // console.log('ERR!!!', err.message);
+      socket.emit('error', err.message)
+    }
+  })
+})
 server.listen(PORT_SOCKET, (err) => {
     if (err) {
         throw Error('Server SOCKEET not running: ', err.message)
@@ -129,3 +124,4 @@ server.listen(PORT_SOCKET, (err) => {
 });
 
 module.exports = io
+
