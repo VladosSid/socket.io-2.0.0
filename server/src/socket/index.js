@@ -18,7 +18,7 @@ const validateUserConnectionsRoom = (data) => {
 
   if(ROOMS[indexRoom].member.find(memb => memb.id === user.id)) throw new Error('User connected!!!')
 
-  USERS[userIndex].socketId.push(socketId)
+  USERS[userIndex].socketId = socketId
 
   ROOMS[indexRoom].member.push({
     id: user.id,
@@ -47,7 +47,7 @@ const disconnectedUser = (data) => {
   if (userIndex === -1 || !USERS[userIndex].online) throw new Error('Not autorized!!!')
   const user = USERS[userIndex]
 
-  USERS[userIndex].socketId = []
+  USERS[userIndex].socketId = null
 
   //find room
   const indexRoom = ROOMS.findIndex(room => room.id === roomId) 

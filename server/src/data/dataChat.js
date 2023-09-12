@@ -1,11 +1,11 @@
 // lsit users
 let USERS = [
-  {id: '123148shdjasd-asfhas', socketId: [], name: 'STEPaN', password: '123', online: true},
-  {id: '234ds-asd34fdqwd32', socketId: [], name: 'Vlados', password: '123', online: false},
-  {id: 'asd324f-ash43uds', socketId: [], name: 'TOPName', password: '123', online: true},
-  {id: '42893dh-sjf38112dsa', socketId: [], name: 'АйКю999', password: '123', online: true},
-  {id: '37wh0jsd-asjf328hs-sa', socketId: [], name: 'Гений', password: '123', online: false},
-  {id: '4325hgavd-asjf328haass', socketId: [], name: 'SupetTester', password: '123', online: false},
+  {id: '123148shdjasd-asfhas', socketId: null, name: 'STEPaN', password: '123', online: true},
+  {id: '234ds-asd34fdqwd32', socketId: null, name: 'Vlados', password: '123', online: false},
+  {id: 'asd324f-ash43uds', socketId: null, name: 'TOPName', password: '123', online: true},
+  {id: '42893dh-sjf38112dsa', socketId: null, name: 'АйКю999', password: '123', online: true},
+  {id: '37wh0jsd-asjf328hs-sa', socketId: null, name: 'Гений', password: '123', online: false},
+  {id: '4325hgavd-asjf328haass', socketId: null, name: 'SupetTester', password: '123', online: false},
   
 ]
 // list rooms

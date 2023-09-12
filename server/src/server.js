@@ -23,14 +23,12 @@ app.use(cors());
 app.use('/auth', routerAuth);
 app.use('/room', routerRooms);
 
-const { USERS, ROOMS } = require('./data/dataChat')
-
-let count = 1 
+let count = 1
 
 io.on('connection', (socket) => {
   console.log('connected', count, '-', socket.client.id);
   count += 1
-  socket.handshake.auth.userInRoom = []
+  socket.handshake.auth.userInRoom = null
   // disconected
   socket.on('disconnect', async () => {
     try {
@@ -39,15 +37,14 @@ io.on('connection', (socket) => {
         userId: socket.handshake.auth.userId,
         roomId: socket.handshake.auth.userInRoom,
       }
+
       const dataDisconected = await socketOperations.disconnectedUser(data)
       
-      // console.log('dataDisconected', dataDisconected);
-
       socket.to(data.roomId).emit('leaveRoom', dataDisconected)
       socket.leave(socket.handshake.auth.roomId)
       console.log(`${socket.client.id} disconnect!!!`);
     } catch (err) {
-      // console.log("disconnect ERR", err.message);
+      console.log("disconnect ERR", err.message);
       socket.emit('error', err.message)
     }
     // count -= 1
@@ -81,6 +78,7 @@ io.on('connection', (socket) => {
       data.socketId = socket.client.id
       const userCurrentRoom = await socketOperations.validateUserConnectionsRoom(data)
 
+      // save data in socket handshake for socket.on "disconect"
       socket.handshake.auth.userId = data.userId
       socket.handshake.auth.userInRoom = data.roomId
 
@@ -93,9 +91,12 @@ io.on('connection', (socket) => {
         message: 'Welcom in Chat!!!',
         room: userCurrentRoom.room,
       }
-
+      
+      // connected room 
       socket.join(data.roomId)
+      // message all users except the owner of attachment new user
       socket.to(data.roomId).emit('joinRoom', allUsersData)
+      // welcome message owner  
       socket.emit('welcomMessage', welcomMessage)
       } catch (err) {
       // console.log("connect ERR", err.message);
@@ -103,15 +104,15 @@ io.on('connection', (socket) => {
     }
   })
 
+  // message
   socket.on('messageRoom', async data => {
     try {
       const messageData = socketOperations.sendMessageRoom(data)
-      // console.log('newMessage', messageData);
 
       socket.to(data.roomId).emit('newMessage', messageData)
       socket.emit('newMessage', messageData)
     } catch (err) {
-      // console.log('ERR!!!', err.message);
+      console.log('ERR!!!', err.message);
       socket.emit('error', err.message)
     }
   })
