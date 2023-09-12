@@ -21,7 +21,34 @@
     list-style: none;
 }
 
-.User-item {
-    margin-bottom: 10px;
-    font-size: 22px;
+.User__item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 20px;
+
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+
+  margin-bottom: 10px;
+
+  border: 3px solid #f5c75a;
+  border-radius: 20px;
+}
+
+.User__item--owner {
+  border-color: #2d3ef9;
+  font-weight: 700;
+  color: #2d3ef9;
+}
+
+.User__avatar {
+  width: 80px;
+  height: 80px;
+}
+
+.User__name {
+  font-size: 30px;
 }

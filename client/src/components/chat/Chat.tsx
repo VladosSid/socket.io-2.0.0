@@ -1,19 +1,19 @@
-import React from 'react'
-
-import authSelectors from '../../reduxToolkit/selectors/selectorsUser'
+import React, { useEffect } from 'react'
 
 import ChatMessage from './ChatMessage'
 import MessageInput from './ChatInput'
 
 import './Chat.css'
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 interface IProps {
   isConnected: Boolean,
-  sendMessage: (msg:string) => void
+  sendMessage: (msg:string) => void,
 }
 
 const Chat: React.FC<IProps> = ({ isConnected, sendMessage}) => {  
-  const currentUsername = authSelectors.useGetCurrentUserName()
 
   return (
     <div className='Chat'>
@@ -22,11 +22,22 @@ const Chat: React.FC<IProps> = ({ isConnected, sendMessage}) => {
         <span>Loading...</span> : 
         <>
           <span className='Chat-title'>
-            Wecom in chat, <span>{currentUsername}</span>
+            <ToastContainer
+              autoClose={1000}
+              position='top-center'
+              closeButton={false}
+              hideProgressBar={true}
+              pauseOnHover={false}
+              pauseOnFocusLoss={false}
+              closeOnClick={false}
+              newestOnTop={true}
+              draggable={false}
+              limit={1}
+            />
           </span>
 
           <div className='Chat__mess-continer'>
-              <ChatMessage />
+            <ChatMessage />
 
             <MessageInput sendMessageUser={sendMessage}/>
           </div>

@@ -20,13 +20,13 @@ const ChatMessages:React.FC = () => {
       setMessageList(messages)
     }
   }, [messages])
-
+      
   useEffect(() => {
     if (scrollMessage && scrollMessage.current) {
       scrollMessage.current.scrollTop = scrollMessage.current.scrollHeight
     }
   }, [messageList.length])
-  
+
   return (
     <div className='Chat__mess-continer--scroll' ref={scrollMessage}>
       <TransitionGroup component='ul' className='Chat-messages'>
@@ -45,9 +45,9 @@ const ChatMessages:React.FC = () => {
                   </span>
 
                   <span 
-                    className={`Chat-messages__text ${msg.owner === currentUsername ? 'Chat-messages__text--owner' : ''}`}>
-                      {msg.message}
-                  </span>
+                    className={`Chat-messages__text ${msg.owner === currentUsername ? 'Chat-messages__text--owner' : ''}`} 
+                    dangerouslySetInnerHTML={{ __html: msg.message }}
+                  />
                 </li>
               </CSSTransition>
             )

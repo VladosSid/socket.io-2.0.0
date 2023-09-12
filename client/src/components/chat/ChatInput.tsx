@@ -35,11 +35,30 @@ const MessageInput: React.FC<props> = ({sendMessageUser}) => {
     // }
   }
 
+  const handleKeyDown = (e:React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // setMessage(e.target.value)
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      setMessage(message + '\n');
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      sendMessageUser(message)
+      setMessage('')
+    }
+  }
+
   return (
     <>
       <form onSubmit={e => sendMessage(e)} className='Chat-input__form'>
         <div style={{width: "100%", position: 'relative'}}>
-          <textarea value={message} autoFocus={true} onChange={e => changeMessage(e)} className='Chat-input__form-input'></textarea>
+          <textarea 
+            value={message} 
+            autoFocus={true} 
+            onChange={e => changeMessage(e)} 
+            className='Chat-input__form-input'
+            onKeyDown={e => handleKeyDown(e)}
+            placeholder="Change message..."
+          ></textarea>
           
           <button type='submit' className='Chat-input__button'>Send</button>
         </div>
